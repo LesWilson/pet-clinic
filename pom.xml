@@ -4,7 +4,7 @@
 
     <groupId>dev.leswilson</groupId>
     <artifactId>pet-clinic</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <modules>
         <module>pet-clinic-data</module>
@@ -61,6 +61,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <goals>install</goals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
         </plugins>
@@ -68,6 +69,7 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:LesWilson/pet-clinic.git</developerConnection>
-    </scm>
+      <tag>HEAD</tag>
+  </scm>
 
 </project>
