@@ -1,0 +1,27 @@
+#
+# Generate the table used to generate nextIds for each of the primary key columns
+#
+databaseChangeLog:
+  - preConditions:
+      - not:
+          - tableExists:
+              tableName: next_ids
+
+  - changeSet:
+      id: 20190730-table-next-ids-create
+      author: leswilson
+      changes:
+        - createTable:
+            tableName: next_ids
+            columns:
+              - column:
+                  name: table_name
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: next_id
+                  type: int
+                  constraints:
+                    nullable: false
