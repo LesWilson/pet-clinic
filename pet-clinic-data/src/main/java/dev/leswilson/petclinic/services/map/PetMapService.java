@@ -45,7 +45,7 @@ public class PetMapService extends AbstractMapService<Pet, Long> implements PetS
 
         return this.findAll()
                 .stream()
-                .filter(entry -> owner.equals(entry.getOwner()))
+                .filter(entry -> entry.getOwner() != null && owner.getId().equals(entry.getOwner().getId()))
                 .collect(toSet());
     }
 }
