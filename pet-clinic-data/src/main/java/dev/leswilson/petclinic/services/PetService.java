@@ -1,14 +1,12 @@
 package dev.leswilson.petclinic.services;
 
+import dev.leswilson.petclinic.model.Owner;
 import dev.leswilson.petclinic.model.Pet;
 
 import java.util.Set;
 
-public interface PetService {
+public interface PetService extends CrudService<Pet, Long> {
 
-    Pet findById(Long id);
+    Set<Pet> findByOwner(Owner owner);
 
-    Pet save(Pet pet);
-
-    Set<Pet> findAll();
 }
