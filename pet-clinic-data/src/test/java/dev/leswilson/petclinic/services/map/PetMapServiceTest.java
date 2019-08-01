@@ -13,7 +13,6 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
-//@DisplayName("Given we are processing Pets")
 class PetMapServiceTest {
 
     PetMapService service;
@@ -91,7 +90,7 @@ class PetMapServiceTest {
             }
 
             @Test
-            @DisplayName("Then we can find a Pet by an Owner who has no pets")
+            @DisplayName("Then we cannot find a Pet using an Owner who has no pets")
             void findByOwnerReturnsNoRowsWhenOwnerWithNoPetsPassedIn() {
                 Owner owner1 = new Owner();
                 owner1.setId(22L);
