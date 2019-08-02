@@ -30,22 +30,19 @@ class VetMapServiceTest {
         @BeforeEach
         void setUp() {
             vet1 = new Vet();
-            vet1.setId(1L);
             vet1.setFirstName("Rocky");
             vet1.setLastName("Balboa");
-            service.save(vet1);
+            vet1 = service.save(vet1);
 
             vet2 = new Vet();
-            vet2.setId(2L);
             vet2.setFirstName("Rocky2");
             vet2.setLastName("Balboa2");
-            service.save(vet2);
+            vet2 = service.save(vet2);
 
             vet3 = new Vet();
-            vet3.setId(3L);
             vet3.setFirstName("Rocky3");
             vet3.setLastName("Balboa3");
-            service.save(vet3);
+            vet3 = service.save(vet3);
 
             vets = service.findAll();
         }
@@ -64,17 +61,17 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we can find a Vet using an existing Id")
             void findByValidId() {
-                Vet vet = service.findById(1L);
+                Vet vet = service.findById(vet1.getId());
                 assertThat(vet, is(notNullValue()));
                 assertThat(vet, is(vet1));
-                assertThat(vet.getId(), is(1L));
+                assertThat(vet.getId(), is(vet1.getId()));
                 assertThat(vet.getFirstName(), is(vet1.getFirstName()));
             }
 
             @Test
             @DisplayName("Then we do not find a Vet using an Id that doesn't exist")
             void findByInvalidId() {
-                Vet vet = service.findById(11L);
+                Vet vet = service.findById(111L);
                 assertThat(vet, is(nullValue()));
             }
 
@@ -88,7 +85,6 @@ class VetMapServiceTest {
             void save() {
                 assertThat(vets, hasSize(3));
                 Vet vet = new Vet();
-                vet.setId(12L);
                 vet.setFirstName("Rocky12");
                 service.save(vet);
                 Set<Vet> vets = service.findAll();

@@ -21,7 +21,7 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner save(Owner owner) {
-        return super.save(owner.getId(), owner);
+        return super.save(owner);
     }
 
     @Override
@@ -42,12 +42,10 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
 //                .map(e -> e.getValue())
 //                .collect(toList());
 
-        Owner owner = this.findAll()
+        return this.findAll()
                 .stream()
                 .filter(entry -> lastName.equalsIgnoreCase(entry.getLastName()))
                 .findFirst()
                 .orElse(null);
-
-        return owner;
     }
 }

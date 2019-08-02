@@ -15,11 +15,11 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 class PetMapServiceTest {
 
-    PetMapService service;
+    private PetMapService service;
 
-    Pet pet1, pet2, pet3;
-    Owner owner;
-    Set<Pet> pets;
+    private Pet pet1, pet2, pet3;
+    private Owner owner;
+    private Set<Pet> pets;
 
     @BeforeEach
     void setUp() {
@@ -35,20 +35,17 @@ class PetMapServiceTest {
             owner.setId(11L);
 
             pet1 = new Pet();
-            pet1.setId(1L);
             pet1.setName("Rocky");
             pet1.setOwner(owner);
-            service.save(pet1);
+            pet1 = service.save(pet1);
 
             pet2 = new Pet();
-            pet2.setId(2L);
             pet2.setName("Rocky2");
-            service.save(pet2);
+            pet2 = service.save(pet2);
 
             pet3 = new Pet();
-            pet3.setId(3L);
             pet3.setName("Rocky3");
-            service.save(pet3);
+            pet3 = service.save(pet3);
 
             pets = service.findAll();
         }
@@ -67,10 +64,10 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can find a Pet using an existing Id")
             void findByValidId() {
-                Pet pet = service.findById(1L);
+                Pet pet = service.findById(pet1.getId());
                 assertThat(pet, is(notNullValue()));
                 assertThat(pet, is(pet1));
-                assertThat(pet.getId(), is(1L));
+                assertThat(pet.getId(), is(pet1.getId()));
                 assertThat(pet.getName(), is(pet1.getName()));
             }
 
@@ -106,9 +103,8 @@ class PetMapServiceTest {
             @DisplayName("Then the Pet is added to the list")
             void save() {
                 Pet pet = new Pet();
-                pet.setId(12L);
                 pet.setName("Rocky12");
-                service.save(pet);
+                pet = service.save(pet);
                 Set<Pet> pets = service.findAll();
                 assertThat(pets, hasSize(4));
                 assertThat(pets.contains(pet), is(true));
@@ -122,6 +118,7 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can delete Pet using an existing Pet object")
             void deleteAnExistingPetObject() {
+                assertThat(pets, hasSize(3));
                 service.delete(pet2);
                 pets = service.findAll();
                 assertThat(pets, hasSize(2));
@@ -131,6 +128,7 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we cannot delete a Pet using a Pet that doesn't exist")
             void deleteANonExistentPetObjectHasNoImpact() {
+                assertThat(pets, hasSize(3));
                 Pet pet = new Pet();
                 pet.setId(100L);
                 pet.setName("test");
@@ -143,6 +141,7 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can delete a Pet using an existing Id")
             void deleteByExistingId() {
+                assertThat(pets, hasSize(3));
                 service.deleteById(pet3.getId());
                 pets = service.findAll();
                 assertThat(pets, hasSize(2));
@@ -152,33 +151,11 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we cannot delete a Pet using an Id that doesn't exist")
             void deleteByNonExistentId() {
+                assertThat(pets, hasSize(3));
                 service.deleteById(101L);
                 pets = service.findAll();
                 assertThat(pets, hasSize(3));
             }
         }
     }
-
-    //
-//    @BeforeEach
-//    void setUp() {
-//        service = new PetMapService();
-//    }
-//
-//
-//
-//    @Test
-//    void findByOwner() {
-//        setUpPets();
-//        assertThat(service.findAll(), hasSize(3));
-//        Owner owner = new Owner();
-//        owner.setId(11L);
-//        Set<Pet> pets = service.findByOwner(owner);
-//        assertThat(pets, hasSize(1));
-//
-//
-//        pets = service.findByOwner(owner);
-//        assertThat(service.findAll(), hasSize(1));
-//    }
-//
 }
