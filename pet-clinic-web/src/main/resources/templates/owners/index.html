@@ -3,8 +3,34 @@
   <head>
     <meta charset="UTF-8">
     <title>Pet Clinic - List of Owners</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+      #col1 {width:150px; cursor: pointer}
+      #col2 {width:200px; cursor: pointer}
+      #col3 {width:200px; cursor: pointer}
+    </style>
   </head>
   <body>
     <h1 th:text="'Pet Clinic - List of Owners'">Welcome to the Owners Page</h1>
+    <table class="table table-striped" id="user-list">
+      <thead>
+        <tr>
+          <th id="col1" th:text="#{owner.list.firstName.id}">Id</th>
+          <th id="col2" th:text="#{owner.list.firstName.header}">First Name</th>
+          <th id="col3" th:text="#{owner.list.lastName.header}">Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="owner : ${owners}"
+            style="cursor: pointer"
+            th:data-thing="${owner.id}">
+          <td th:text="${owner.id}">1</td>
+          <td th:text="${owner.firstName}">First</td>
+          <td th:text="${owner.lastName}">Owner</td>
+        </tr>
+      </tbody>
+    </table>
+
   </body>
 </html>
