@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
   <head>
     <meta charset="UTF-8">
     <title>Pet Clinic - List of Owners</title>
@@ -12,11 +12,12 @@
     </style>
   </head>
   <body>
-    <h1 th:text="'Pet Clinic - List of Owners'">Welcome to the Owners Page</h1>
+    <h2 th:text="#{owner.list.header}">Welcome to the Owners Page</h2>
+
     <table class="table table-striped" id="user-list">
       <thead>
         <tr>
-          <th id="col1" th:text="#{owner.list.firstName.id}">Id</th>
+          <th id="col1" th:text="#{owner.list.id.header}">Id</th>
           <th id="col2" th:text="#{owner.list.firstName.header}">First Name</th>
           <th id="col3" th:text="#{owner.list.lastName.header}">Last Name</th>
         </tr>
@@ -25,7 +26,7 @@
         <tr th:each="owner : ${owners}"
             style="cursor: pointer"
             th:data-thing="${owner.id}">
-          <td th:text="${owner.id}">1</td>
+          <td th:text="${owner.id}" th:href="@{/owners/__${owner.id}__}">1</td>
           <td th:text="${owner.firstName}">First</td>
           <td th:text="${owner.lastName}">Owner</td>
         </tr>
