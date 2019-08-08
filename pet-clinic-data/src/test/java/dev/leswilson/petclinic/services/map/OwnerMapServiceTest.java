@@ -1,6 +1,9 @@
 package dev.leswilson.petclinic.services.map;
 
 import dev.leswilson.petclinic.model.Owner;
+import dev.leswilson.petclinic.model.Pet;
+import dev.leswilson.petclinic.services.PetService;
+import dev.leswilson.petclinic.services.PetTypeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,12 +19,17 @@ class OwnerMapServiceTest {
 
     private OwnerMapService service;
 
+    private PetTypeService petTypeService;
+    private PetService petService;
+
     private Owner owner1, owner2, owner3;
     private Set<Owner> owners;
 
     @BeforeEach
     void setUp() {
-        service = new OwnerMapService();
+        petTypeService = new PetTypeMapService();
+        petService = new PetMapService();
+        service = new OwnerMapService(petTypeService, petService);
     }
 
     @DisplayName("Given we have a list of Owners")
@@ -105,7 +113,6 @@ class OwnerMapServiceTest {
                 assertThat(owners, hasSize(4));
                 assertThat(owners.contains(owner), is(true));
             }
-
         }
         @DisplayName("When we try to delete Owners")
         @Nested
@@ -153,5 +160,74 @@ class OwnerMapServiceTest {
                 assertThat(owners, hasSize(3));
             }
         }
+
+        @DisplayName("When we add a New Pet to an Owner")
+        @Nested
+        class AddNewPetsToOwnersTest {
+            @Test
+            @DisplayName("Then a new pet id is created when the Owner is saved")
+            void addNewPetToOwner() {
+                Owner owner = new Owner();
+                owner.setFirstName("Rocky12");
+                Pet pet = new Pet();
+                pet.setName("Roxy");
+                owner.getPets().add(pet);
+                assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(nullValue()));
+                service.save(owner);
+                assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(notNullValue()));
+            }
+        }
+
+        @DisplayName("When we add an Existing Pet to an Owner")
+        @Nested
+        class AddExistingPetsToOwnersTest {
+            @Test
+            @DisplayName("Then the pet id is unchanged when the Owner is saved")
+            void addNewPetToOwner() {
+                Owner owner = new Owner();
+                owner.setFirstName("Rocky12");
+                Pet pet = new Pet();
+                pet.setId(123L);
+                pet.setName("Roxy");
+                owner.getPets().add(pet);
+                assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(123L));
+                service.save(owner);
+                assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(123L));
+            }
+        }
+
+        @DisplayName("When we add New and Existing Pets to an Owner")
+        @Nested
+        class AddNewAndExistingPetsToOwnersTest {
+            @Test
+            @DisplayName("Then the new pet gets an id and the existing pet id is unchanged when the Owner is saved")
+            void addNewAndExistingPetsToOwner() {
+                Owner owner = new Owner();
+                owner.setFirstName("Rocky12");
+                Pet pet = new Pet();
+                pet.setId(123L);
+                pet.setName("Roxy");
+                owner.getPets().add(pet);
+
+                Pet pet2 = new Pet();
+                pet2.setName("Moxy");
+                owner.getPets().add(pet2);
+
+                assertThat(owner.getPets(), hasSize(2));
+
+                // Check we have one new and one existing pet
+                assertThat(owner.getPets().stream().filter(Pet::isNew).count(), is(1L));
+                assertThat(owner.getPets().stream().filter(p -> !p.isNew()).count(), is(1L));
+
+                service.save(owner);
+
+                // Now we should no longer have any new pets and Roxy should still be id 123
+                Set<Pet> pets = owner.getPets();
+                assertThat(pets.stream().filter(Pet::isNew).count(), is(0L));
+                assertThat(pets.stream().filter(p -> !p.isNew()).count(), is(2L));
+                assertThat(pets.stream().filter(p -> "Roxy".equals(p.getName()) && p.getId().equals(123L)).count(), is(1L));
+            }
+        }
+
     }
 }

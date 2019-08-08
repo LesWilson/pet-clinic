@@ -1,13 +1,13 @@
 package dev.leswilson.petclinic.bootstrap;
 
-import dev.leswilson.petclinic.model.Owner;
-import dev.leswilson.petclinic.model.PetType;
-import dev.leswilson.petclinic.model.Vet;
+import dev.leswilson.petclinic.model.*;
 import dev.leswilson.petclinic.services.OwnerService;
 import dev.leswilson.petclinic.services.PetTypeService;
 import dev.leswilson.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -40,11 +40,27 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Rocky");
         owner1.setLastName("Balboa");
+        addAddress(owner1, "123 Low Street", "", "Buckhurst Hill", "Essex", "UK", "IG10 6GG");
+        owner1.setTelephone("0208 765 4321");
+        Pet pet1 = new Pet();
+        pet1.setBirthDate(LocalDate.of(2015, 11, 12));
+        pet1.setPetType(dog);
+        pet1.setName("Micky");
+        pet1.setOwner(owner1);
+        owner1.getPets().add(pet1);
         ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Apollo");
         owner2.setLastName("Creed");
+        addAddress(owner2, "123 High Street", "", "Woodford", "Greater London", "UK", "IG9 6AA");
+        owner2.setTelephone("0208 123 4567");
+        Pet pet2 = new Pet();
+        pet2.setBirthDate(LocalDate.of(2017, 1, 23));
+        pet2.setPetType(cat);
+        pet2.setName("Ricky");
+        pet2.setOwner(owner2);
+        owner2.getPets().add(pet2);
         ownerService.save(owner2);
 
         Vet vet1 = new Vet();
@@ -56,5 +72,16 @@ public class DataLoader implements CommandLineRunner {
         vet2.setFirstName("Mrs");
         vet2.setLastName("Creed");
         vetService.save(vet2);
+    }
+
+    private void addAddress(Owner owner, String line1, String line2, String city, String county, String country, String postcode) {
+        Address address = new Address();
+        address.setLine1(line1);
+        address.setLine2(line2);
+        address.setCity(city);
+        address.setCounty(county);
+        address.setCountry(country);
+        address.setPostcode(postcode);
+        owner.setAddress(address);
     }
 }
