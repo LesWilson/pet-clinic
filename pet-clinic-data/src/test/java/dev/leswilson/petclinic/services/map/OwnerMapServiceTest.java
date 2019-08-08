@@ -17,7 +17,6 @@ class OwnerMapServiceTest {
     private OwnerMapService service;
 
     private Owner owner1, owner2, owner3;
-    private Owner owner;
     private Set<Owner> owners;
 
     @BeforeEach
