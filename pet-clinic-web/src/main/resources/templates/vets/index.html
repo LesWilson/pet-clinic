@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'vets')}">
   <head>
     <meta charset="UTF-8">
     <title>Pet Clinic - List of Vets</title>
@@ -12,12 +12,12 @@
     </style>
   </head>
   <body>
-    <h1 th:text="'Pet Clinic - List of Vets'">Welcome to the Vets List</h1>
+    <h2 th:text="#{vet.list.header}">Welcome to the Vets List</h2>
 
-    <table class="table table-striped" id="user-list">
+    <table class="table table-striped" id="vet-list">
       <thead>
       <tr>
-        <th id="col1" th:text="#{vet.list.firstName.id}">Id</th>
+        <th id="col1" th:text="#{vet.list.id.header}">Id</th>
         <th id="col2" th:text="#{vet.list.firstName.header}">First Name</th>
         <th id="col3" th:text="#{vet.list.lastName.header}">Last Name</th>
       </tr>
