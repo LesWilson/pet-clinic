@@ -4,12 +4,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class Owner extends Person {
+public class Visit extends BaseEntity {
 
-    private Set<Pet> pets;
+    private LocalDate date = LocalDate.now();
+    private Pet pet;
+    private String description;
+
 }
