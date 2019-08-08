@@ -11,5 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Owner extends Person {
 
+    private Address address;
+    private String telephone;
     private Set<Pet> pets;
 }
