@@ -3,6 +3,7 @@ package dev.leswilson.petclinic.bootstrap;
 import dev.leswilson.petclinic.model.*;
 import dev.leswilson.petclinic.services.OwnerService;
 import dev.leswilson.petclinic.services.PetTypeService;
+import dev.leswilson.petclinic.services.SpecialityService;
 import dev.leswilson.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,13 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
@@ -63,14 +66,30 @@ public class DataLoader implements CommandLineRunner {
         owner2.getPets().add(pet2);
         ownerService.save(owner2);
 
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        specialityService.save(surgery);
+
+        Speciality aquatic = new Speciality();
+        aquatic.setDescription("Aquatic");
+        specialityService.save(aquatic);
+
+        Speciality birds = new Speciality();
+        birds.setDescription("Birds");
+        specialityService.save(birds);
+
         Vet vet1 = new Vet();
         vet1.setFirstName("Adrienne");
         vet1.setLastName("Balboa");
+        vet1.getSpecialities().add(surgery);
+        vet1.getSpecialities().add(aquatic);
         vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Mrs");
         vet2.setLastName("Creed");
+        vet2.getSpecialities().add(surgery);
+        vet2.getSpecialities().add(birds);
         vetService.save(vet2);
     }
 

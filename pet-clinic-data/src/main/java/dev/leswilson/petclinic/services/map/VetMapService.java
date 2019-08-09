@@ -1,10 +1,13 @@
 package dev.leswilson.petclinic.services.map;
 
+import dev.leswilson.petclinic.model.Speciality;
 import dev.leswilson.petclinic.model.Vet;
 import dev.leswilson.petclinic.services.VetService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @Service
 public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
@@ -34,4 +37,12 @@ public class VetMapService extends AbstractMapService<Vet, Long> implements VetS
         return super.findById(id);
     }
 
+    @Override
+    public Set<Vet> findBySpeciality(Speciality speciality) {
+
+        return this.findAll()
+                .stream()
+                .filter(vet -> vet.getSpecialities() != null && vet.getSpecialities().contains(speciality))
+                .collect(toSet());
+    }
 }

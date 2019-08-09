@@ -1,5 +1,6 @@
 package dev.leswilson.petclinic.services.map;
 
+import dev.leswilson.petclinic.model.Speciality;
 import dev.leswilson.petclinic.model.Vet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,7 @@ class VetMapServiceTest {
     private VetMapService service;
 
     private Vet vet1, vet2, vet3;
-    private Set<Vet> vets;
+    private Speciality speciality1, speciality2;
 
     @BeforeEach
     void setUp() {
@@ -29,22 +30,33 @@ class VetMapServiceTest {
     class ExistingVetTest {
         @BeforeEach
         void setUp() {
+            speciality1 = new Speciality();
+            speciality1.setDescription("Spec1");
+            speciality1.setId(1L);
+
+            speciality2 = new Speciality();
+            speciality2.setDescription("Spec2");
+            speciality2.setId(2L);
+
             vet1 = new Vet();
             vet1.setFirstName("Rocky");
             vet1.setLastName("Balboa");
+            vet1.getSpecialities().add(speciality1);
+            vet1.getSpecialities().add(speciality2);
             vet1 = service.save(vet1);
 
             vet2 = new Vet();
             vet2.setFirstName("Rocky2");
             vet2.setLastName("Balboa2");
+            vet2.getSpecialities().add(speciality1);
             vet2 = service.save(vet2);
 
             vet3 = new Vet();
             vet3.setFirstName("Rocky3");
             vet3.setLastName("Balboa3");
+            vet3.getSpecialities().add(speciality2);
             vet3 = service.save(vet3);
 
-            vets = service.findAll();
         }
 
         @DisplayName("When we search for Vets")
@@ -54,6 +66,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we can find all Vets")
             void findAll() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 assertThat(vets, hasItems(vet1, vet3, vet2));
             }
@@ -75,6 +88,28 @@ class VetMapServiceTest {
                 assertThat(vet, is(nullValue()));
             }
 
+            @Test
+            @DisplayName("Then we can find Vets who have the required Speciality")
+            void findBySpecialityReturnsRowsWhenVetsExistWithSpecialityPassedIn() {
+                Set<Vet> vets = service.findBySpeciality(speciality1);
+                assertThat(vets, hasSize(2));
+                assertThat(vets, hasItems(vet1, vet2));
+                vets = service.findBySpeciality(speciality2);
+                assertThat(vets, hasSize(2));
+                assertThat(vets, hasItems(vet1, vet3));
+            }
+
+            @Test
+            @DisplayName("Then we cannot find any vets using a Speciality no-one has")
+            void findBySpecialityReturnsNoRowsWhenSpecialityWithNoVetsPassedIn() {
+                Speciality speciality = new Speciality();
+                speciality.setDescription("Spec10");
+                speciality.setId(10L);
+
+                Set<Vet> vets = service.findBySpeciality(speciality);
+                assertThat(vets, hasSize(0));
+            }
+
         }
 
         @DisplayName("When we try to add a new Vet")
@@ -83,11 +118,12 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then the Vet is added to the list")
             void save() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 Vet vet = new Vet();
                 vet.setFirstName("Rocky12");
                 service.save(vet);
-                Set<Vet> vets = service.findAll();
+                vets = service.findAll();
                 assertThat(vets, hasSize(4));
                 assertThat(vets.contains(vet), is(true));
             }
@@ -100,6 +136,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we can delete Vet using an existing Vet object")
             void deleteAnExistingVetObject() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 service.delete(vet2);
                 vets = service.findAll();
@@ -110,6 +147,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we cannot delete a Vet using a Vet that doesn't exist")
             void deleteANonExistentVetObjectHasNoImpact() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 Vet vet = new Vet();
                 vet.setId(100L);
@@ -123,6 +161,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we can delete a Vet using an existing Id")
             void deleteByExistingId() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 service.deleteById(vet3.getId());
                 vets = service.findAll();
@@ -133,6 +172,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we cannot delete a Vet using an Id that doesn't exist")
             void deleteByNonExistentId() {
+                Set<Vet> vets = service.findAll();
                 assertThat(vets, hasSize(3));
                 service.deleteById(101L);
                 vets = service.findAll();
