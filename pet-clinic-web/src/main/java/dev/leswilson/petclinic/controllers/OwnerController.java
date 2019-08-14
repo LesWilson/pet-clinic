@@ -16,9 +16,14 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping(value={"", "/", "/index", "/find", "/index.html"})
+    @GetMapping(value={"", "/", "/index", "/index.html"})
     public String index(Model model) {
         model.addAttribute("owners", ownerService.findAll());
         return "owners/index";
+    }
+    @GetMapping(value={"/find"})
+    public String find(Model model) {
+        model.addAttribute("owners", ownerService.findAll());
+        return "owners/find";
     }
 }
