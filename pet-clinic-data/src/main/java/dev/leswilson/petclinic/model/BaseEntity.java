@@ -15,26 +15,28 @@ import java.util.Date;
 @Getter
 @Setter
 @EqualsAndHashCode
+@MappedSuperclass
 public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="idGen")
     private Long id;
 
+    @CreatedBy
+    private String createdBy;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
     @CreatedDate   // can also use @CreationTimestamp
     private Date createdAt;
 
+    @LastModifiedBy
+    private String updatedBy;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     @LastModifiedDate   // can also use @UpdateTimestamp
     private Date updatedAt;
-
-    @CreatedBy
-    private String createdBy;
-    @LastModifiedBy
-    private String updatedBy;
 
     public boolean isNew() {
         return id == null;
