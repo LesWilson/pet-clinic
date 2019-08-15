@@ -5,11 +5,13 @@ import dev.leswilson.petclinic.services.OwnerService;
 import dev.leswilson.petclinic.services.PetTypeService;
 import dev.leswilson.petclinic.services.SpecialityService;
 import dev.leswilson.petclinic.services.VetService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -32,6 +34,7 @@ public class DataLoader implements CommandLineRunner {
         if(count > 0) {
             return;
         }
+        log.info("**** initialising data ***");
         PetType dog = new PetType();
         dog.setName("Dog");
         dog = petTypeService.save(dog);
