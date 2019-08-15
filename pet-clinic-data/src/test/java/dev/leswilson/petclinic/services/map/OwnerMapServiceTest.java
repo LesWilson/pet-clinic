@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -48,8 +49,8 @@ class OwnerMapServiceTest {
             owner2 = service.save(owner2);
 
             owner3 = new Owner();
-            owner3.setFirstName("Rocky3");
-            owner3.setLastName("Balboa3");
+            owner3.setFirstName("Locky2");
+            owner3.setLastName("Halboa25");
             owner3 = service.save(owner3);
 
             owners = service.findAll();
@@ -97,6 +98,22 @@ class OwnerMapServiceTest {
                 Owner owner = service.findByLastName("Smith");
                 assertThat(owner, is(nullValue()));
             }
+
+            @Test
+            @DisplayName("Then we can find Owners by partial last name")
+            void findByOwnerLastNameLikeReturnsRowsWhenPartialExistingLastNamePassedIn() {
+                List<Owner> owners = service.findAllByLastNameLike("boa2");
+                assertThat(owners, is(notNullValue()));
+                assertThat(owners, hasSize(2));
+                assertThat(owners, hasItems(owner2, owner3));
+            }
+
+            @Test
+            @DisplayName("Then we cannot find Owners by partial last name that doesn't exist")
+            void findByOwnerLastNameReturnsNoRowsWhenNonExistentPartialLastNamePassedIn() {
+                List<Owner> owners = service.findAllByLastNameLike("Smith");
+                assertThat(owners, hasSize(0));
+            }
         }
 
         @DisplayName("When we try to add a new Owner")
@@ -113,6 +130,18 @@ class OwnerMapServiceTest {
                 assertThat(owners, hasSize(4));
                 assertThat(owners.contains(owner), is(true));
             }
+            @Test
+            @DisplayName("Then the null Owner is not added to the list")
+            void saveNull() {
+                assertThat(owners, hasSize(3));
+                Owner owner = null;
+                Owner save = service.save(owner);
+                assertThat(save, is(nullValue()));
+                Set<Owner> owners = service.findAll();
+                assertThat(owners, hasSize(3));
+                assertThat(owners.contains(owner), is(false));
+            }
+
         }
         @DisplayName("When we try to delete Owners")
         @Nested

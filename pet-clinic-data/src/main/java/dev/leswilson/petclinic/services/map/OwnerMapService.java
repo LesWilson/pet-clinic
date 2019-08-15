@@ -4,12 +4,14 @@ import dev.leswilson.petclinic.model.Owner;
 import dev.leswilson.petclinic.model.Pet;
 import dev.leswilson.petclinic.services.OwnerService;
 import dev.leswilson.petclinic.services.PetService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Profile("map")
@@ -75,7 +77,9 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
     @Override
     public List<Owner> findAllByLastNameLike(String lastName) {
 
-        //todo - impl
-        return null;
+        return this.findAll()
+                .stream()
+                .filter(entry -> StringUtils.contains(entry.getLastName(), lastName))
+                .collect(Collectors.toList());
     }
 }
