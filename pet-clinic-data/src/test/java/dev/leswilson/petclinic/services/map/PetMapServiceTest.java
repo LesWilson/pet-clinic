@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -81,7 +82,7 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can find Pets by an Owner who has Pets")
             void findByOwnerReturnsRowsWhenOwnerWithPetsPassedIn() {
-                Set<Pet> pets = service.findByOwner(owner);
+                List<Pet> pets = service.findByOwner(owner);
                 assertThat(pets, hasSize(1));
                 assertThat(pets, hasItem(pet1));
             }
@@ -91,7 +92,7 @@ class PetMapServiceTest {
             void findByOwnerReturnsNoRowsWhenOwnerWithNoPetsPassedIn() {
                 Owner owner1 = new Owner();
                 owner1.setId(22L);
-                Set<Pet> pets = service.findByOwner(owner1);
+                List<Pet> pets = service.findByOwner(owner1);
                 assertThat(pets, hasSize(0));
             }
         }

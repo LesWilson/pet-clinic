@@ -1,0 +1,57 @@
+#
+# Generate the table used to generate nextIds for each of the primary key columns
+#
+databaseChangeLog:
+  - preConditions:
+      - not:
+          - tableExists:
+              tableName: speciality
+
+  - changeSet:
+      id: 20190815-table-speciality-create
+      author: leswilson
+      changes:
+        - createTable:
+            tableName: speciality
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  defaultValueComputed: current_datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(200)
+              - column:
+                  name: updated_at
+                  type: datetime
+                  defaultValueComputed: current_datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: varchar(200)
+
+  - changeSet:
+      id: 20190815-table-speciality-add-primary-key
+      author: leswilson
+      changes:
+        - preConditions:
+            - not:
+                - primaryKeyExists:
+                    tableName: speciality
+        - addPrimaryKey:
+            columnNames: id
+            constraintName: pk_speciality
+            tableName: speciality

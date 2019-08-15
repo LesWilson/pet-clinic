@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,7 +23,7 @@ import java.time.LocalDate;
         valueColumnName = "next_id",
         pkColumnValue="pet",
         allocationSize=5,
-        initialValue = 1
+        initialValue = 0
 )
 public class Pet extends BaseEntity {
 
@@ -36,4 +38,7 @@ public class Pet extends BaseEntity {
     private PetType petType;
 
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private List<Visit> visits = new ArrayList<>();
 }

@@ -1,0 +1,39 @@
+#
+# Generate the table used to generate nextIds for each of the primary key columns
+#
+databaseChangeLog:
+  - preConditions:
+      - not:
+          - tableExists:
+              tableName: vet_speciality
+
+  - changeSet:
+      id: 20190815-table-vet-speciality-create
+      author: leswilson
+      changes:
+        - createTable:
+            tableName: vet_speciality
+            columns:
+              - column:
+                  name: vet_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: speciality_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 20190814-table-vet-speciality-add-primary-key
+      author: leswilson
+      changes:
+        - preConditions:
+            - not:
+                - primaryKeyExists:
+                    tableName: vet_speciality
+        - addPrimaryKey:
+            columnNames: vet_id, speciality_id
+            constraintName: pk_vet_speciality
+            tableName: vet_speciality

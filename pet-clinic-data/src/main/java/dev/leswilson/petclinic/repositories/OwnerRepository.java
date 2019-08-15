@@ -1,4 +1,4 @@
-package dev.leswilson.petclinic.services.jpa;
+package dev.leswilson.petclinic.repositories;
 
 import dev.leswilson.petclinic.model.Owner;
 import org.springframework.data.repository.CrudRepository;

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -91,7 +92,7 @@ class VetMapServiceTest {
             @Test
             @DisplayName("Then we can find Vets who have the required Speciality")
             void findBySpecialityReturnsRowsWhenVetsExistWithSpecialityPassedIn() {
-                Set<Vet> vets = service.findBySpeciality(speciality1);
+                List<Vet> vets = service.findBySpeciality(speciality1);
                 assertThat(vets, hasSize(2));
                 assertThat(vets, hasItems(vet1, vet2));
                 vets = service.findBySpeciality(speciality2);
@@ -106,7 +107,7 @@ class VetMapServiceTest {
                 speciality.setDescription("Spec10");
                 speciality.setId(10L);
 
-                Set<Vet> vets = service.findBySpeciality(speciality);
+                List<Vet> vets = service.findBySpeciality(speciality);
                 assertThat(vets, hasSize(0));
             }
 

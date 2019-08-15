@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -112,7 +113,7 @@ class VisitMapServiceTest {
             @Test
             @DisplayName("Then we can find Visits by a Pet who has Visits")
             void findByPetReturnsRowsWhenPetWithVisitsPassedIn() {
-                Set<Visit> visits = service.findByPet(pet1);
+                List<Visit> visits = service.findByPet(pet1);
                 assertThat(visits, hasSize(2));
                 assertThat(visits, hasItems(visit1, visit2));
             }
@@ -120,14 +121,14 @@ class VisitMapServiceTest {
             @Test
             @DisplayName("Then we cannot find a visit using a Pet who has no visits")
             void findByPetReturnsNoRowsWhenPetWithNoVisitsPassedIn() {
-                Set<Visit> visits = service.findByPet(pet3);
+                List<Visit> visits = service.findByPet(pet3);
                 assertThat(visits, hasSize(0));
             }
 
             @Test
             @DisplayName("Then we can find Visits by an Owner whose Pets have Visits")
             void findByOwnerReturnsRowsWhenOwnerWithPetWithVisitsPassedIn() {
-                Set<Visit> visits = service.findByOwner(owner1);
+                List<Visit> visits = service.findByOwner(owner1);
                 assertThat(visits, hasSize(2));
                 assertThat(visits, hasItems(visit1, visit2));
             }
@@ -137,7 +138,7 @@ class VisitMapServiceTest {
             void findByOwnerReturnsNoRowsWhenOwnerWithPetsWithNoVisitsPassedIn() {
                 Owner owner = new Owner();
                 owner.setId(222L);
-                Set<Visit> visits = service.findByOwner(owner);
+                List<Visit> visits = service.findByOwner(owner);
                 assertThat(visits, hasSize(0));
             }
         }

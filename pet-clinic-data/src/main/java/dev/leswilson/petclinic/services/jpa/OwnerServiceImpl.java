@@ -1,8 +1,8 @@
 package dev.leswilson.petclinic.services.jpa;
 
 import dev.leswilson.petclinic.model.Owner;
+import dev.leswilson.petclinic.repositories.OwnerRepository;
 import dev.leswilson.petclinic.services.OwnerService;
-import dev.leswilson.petclinic.services.PetService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,9 @@ import java.util.Set;
 public class OwnerServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
-    private final PetService petService;
 
-    public OwnerServiceImpl(OwnerRepository ownerRepository, PetService petService) {
+    public OwnerServiceImpl(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
-        this.petService = petService;
     }
 
     @Override

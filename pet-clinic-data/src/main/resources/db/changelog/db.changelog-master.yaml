@@ -6,4 +6,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/tables/pet.yml
   - include:
+      file: db/changelog/tables/vet.yml
+  - include:
+      file: db/changelog/tables/visit.yml
+  - include:
       file: db/changelog/tables/owner.yml
+  - include:
+      file: db/changelog/tables/speciality.yml
+  - include:
+      file: db/changelog/tables/vet_speciality.yml

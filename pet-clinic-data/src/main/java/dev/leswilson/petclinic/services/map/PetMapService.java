@@ -3,12 +3,15 @@ package dev.leswilson.petclinic.services.map;
 import dev.leswilson.petclinic.model.Owner;
 import dev.leswilson.petclinic.model.Pet;
 import dev.leswilson.petclinic.services.PetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toList;
 
+@Profile("map")
 @Service
 public class PetMapService extends AbstractMapService<Pet, Long> implements PetService {
 
@@ -38,7 +41,7 @@ public class PetMapService extends AbstractMapService<Pet, Long> implements PetS
     }
 
     @Override
-    public Set<Pet> findByOwner(Owner owner) {
+    public List<Pet> findByOwner(Owner owner) {
 //        return map.entrySet()
 //                .stream()
 //                .filter(entry -> owner.equals(entry.getValue().getOwner()))
@@ -48,6 +51,6 @@ public class PetMapService extends AbstractMapService<Pet, Long> implements PetS
         return this.findAll()
                 .stream()
                 .filter(entry -> entry.getOwner() != null && owner.getId().equals(entry.getOwner().getId()))
-                .collect(toSet());
+                .collect(toList());
     }
 }
