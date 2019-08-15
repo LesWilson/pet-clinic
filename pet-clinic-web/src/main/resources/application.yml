@@ -6,3 +6,12 @@ server:
 spring:
   messages:
     basename: messages/messages
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  profiles:
+    active: jpa
+
+#  h2:
+#    console:
+#      enabled: true

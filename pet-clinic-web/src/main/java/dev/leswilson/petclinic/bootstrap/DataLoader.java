@@ -116,6 +116,6 @@ public class DataLoader implements CommandLineRunner {
         address.setCounty(county);
         address.setCountry(country);
         address.setPostcode(postcode);
-        owner.setAddress(address);
+        owner.setHomeAddress(address);
     }
 }

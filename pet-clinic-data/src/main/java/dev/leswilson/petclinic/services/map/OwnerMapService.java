@@ -4,20 +4,20 @@ import dev.leswilson.petclinic.model.Owner;
 import dev.leswilson.petclinic.model.Pet;
 import dev.leswilson.petclinic.services.OwnerService;
 import dev.leswilson.petclinic.services.PetService;
-import dev.leswilson.petclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
+@Profile("map")
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
 
-    private final PetTypeService petTypeService;
     private final PetService petService;
 
-    public OwnerMapService(PetTypeService petTypeService, PetService petService) {
-        this.petTypeService = petTypeService;
+    public OwnerMapService(PetService petService) {
         this.petService = petService;
     }
 
@@ -70,5 +70,12 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
                 .filter(entry -> lastName.equalsIgnoreCase(entry.getLastName()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public List<Owner> findAllByLastNameLike(String lastName) {
+
+        //todo - impl
+        return null;
     }
 }

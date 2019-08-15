@@ -29,7 +29,7 @@ class OwnerMapServiceTest {
     void setUp() {
         petTypeService = new PetTypeMapService();
         petService = new PetMapService();
-        service = new OwnerMapService(petTypeService, petService);
+        service = new OwnerMapService(petService);
     }
 
     @DisplayName("Given we have a list of Owners")

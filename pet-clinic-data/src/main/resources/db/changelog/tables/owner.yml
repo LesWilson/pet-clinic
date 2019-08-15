@@ -1,0 +1,83 @@
+#
+# Generate the table used to generate nextIds for each of the primary key columns
+#
+databaseChangeLog:
+  - preConditions:
+      - not:
+          - tableExists:
+              tableName: owner
+
+  - changeSet:
+      id: 20190814-table-owner-create
+      author: leswilson
+      changes:
+        - createTable:
+            tableName: owner
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: home_address_line_1
+                  type: varchar(100)
+              - column:
+                  name: home_address_line_2
+                  type: varchar(100)
+              - column:
+                  name: home_address_city
+                  type: varchar(100)
+              - column:
+                  name: home_address_county
+                  type: varchar(100)
+              - column:
+                  name: home_address_country
+                  type: varchar(100)
+              - column:
+                  name: home_address_postcode
+                  type: varchar(20)
+              - column:
+                  name: telephone
+                  type: varchar(20)
+              - column:
+                  name: created_at
+                  type: datetime
+                  defaultValueComputed: current_datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(200)
+              - column:
+                  name: updated_at
+                  type: datetime
+                  defaultValueComputed: current_datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_by
+                  type: varchar(200)
+
+  - changeSet:
+      id: 20190814-table-owner-add-primary-key
+      author: leswilson
+      changes:
+        - preConditions:
+            - not:
+                - primaryKeyExists:
+                    tableName: owner
+        - addPrimaryKey:
+            columnNames: id
+            constraintName: pk_owner
+            tableName: owner

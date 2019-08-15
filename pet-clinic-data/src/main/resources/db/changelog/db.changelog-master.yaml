@@ -1,3 +1,9 @@
 databaseChangeLog:
   - include:
       file: db/changelog/tables/next_ids.yml
+  - include:
+      file: db/changelog/tables/pet_type.yml
+  - include:
+      file: db/changelog/tables/pet.yml
+  - include:
+      file: db/changelog/tables/owner.yml
