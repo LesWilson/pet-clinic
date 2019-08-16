@@ -3,7 +3,6 @@ package dev.leswilson.petclinic.services.map;
 import dev.leswilson.petclinic.model.Owner;
 import dev.leswilson.petclinic.model.Pet;
 import dev.leswilson.petclinic.services.PetService;
-import dev.leswilson.petclinic.services.PetTypeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,7 +19,6 @@ class OwnerMapServiceTest {
 
     private OwnerMapService service;
 
-    private PetTypeService petTypeService;
     private PetService petService;
 
     private Owner owner1, owner2, owner3;
@@ -28,7 +26,6 @@ class OwnerMapServiceTest {
 
     @BeforeEach
     void setUp() {
-        petTypeService = new PetTypeMapService();
         petService = new PetMapService();
         service = new OwnerMapService(petService);
     }
@@ -68,7 +65,7 @@ class OwnerMapServiceTest {
             }
 
             @Test
-            @DisplayName("Then we can find a Owner using an existing Id")
+            @DisplayName("Then we can find an Owner using an existing Id")
             void findByValidId() {
                 Owner owner = service.findById(owner1.getId());
                 assertThat(owner, is(notNullValue()));
@@ -78,7 +75,7 @@ class OwnerMapServiceTest {
             }
 
             @Test
-            @DisplayName("Then we do not find a Owner using an Id that doesn't exist")
+            @DisplayName("Then we do not find an Owner using an Id that doesn't exist")
             void findByInvalidId() {
                 Owner owner = service.findById(111L);
                 assertThat(owner, is(nullValue()));
@@ -120,7 +117,7 @@ class OwnerMapServiceTest {
         @Nested
         class AddOwnersTest {
             @Test
-            @DisplayName("Then the Owner is added to the list")
+            @DisplayName("Then the valid Owner is added to the list")
             void save() {
                 assertThat(owners, hasSize(3));
                 Owner owner = new Owner();
