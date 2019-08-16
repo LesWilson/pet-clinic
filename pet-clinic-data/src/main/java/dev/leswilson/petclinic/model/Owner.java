@@ -26,6 +26,14 @@ import java.util.Set;
 )
 public class Owner extends Person {
 
+//    @Builder
+//    public Owner(Long id, String createdBy, Date createdAt, String updatedBy, Date updatedAt, String firstName, String lastName, Address homeAddress, String telephone, Set<Pet> pets) {
+//        super(id, createdBy, createdAt, updatedBy, updatedAt, firstName, lastName);
+//        this.homeAddress = homeAddress;
+//        this.telephone = telephone;
+//        this.pets = pets;
+//    }
+
     @Embedded
     @AttributeOverrides(value = {
             @AttributeOverride(name = "line1", column = @Column(name = "home_address_line_1")),

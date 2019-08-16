@@ -14,6 +14,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+//@Builder
 @EqualsAndHashCode
 @MappedSuperclass
 public class BaseEntity implements Serializable {
