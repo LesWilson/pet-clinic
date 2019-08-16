@@ -14,7 +14,7 @@
   <body>
     <h2 th:text="#{vet.list.header}">Welcome to the Vets List</h2>
 
-    <table class="table table-striped" id="vet-list">
+    <table class="table table-striped table-hover" id="vet-list">
       <thead>
       <tr>
         <th id="col1" th:text="#{vet.list.id.header}">Id</th>
@@ -29,6 +29,18 @@
         <td th:text="${vet.id}">1</td>
         <td th:text="${vet.firstName}">First</td>
         <td th:text="${vet.lastName}">Owner</td>
+      </tr>
+      <tr th:remove="all"
+          style="cursor: pointer">
+        <td>2</td>
+        <td>Second</td>
+        <td>Vet</td>
+      </tr>
+      <tr th:remove="all"
+          style="cursor: pointer">
+        <td>3</td>
+        <td>Third</td>
+        <td>Owner</td>
       </tr>
       </tbody>
     </table>
