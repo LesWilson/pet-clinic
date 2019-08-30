@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class SpecialityServiceImplTest {
 
     private Speciality speciality;
-    private final Long specialityId = 123L;
+    private final static Long specialityId = 123L;
 
     @Mock
     private SpecialityRepository repository;

@@ -21,8 +21,8 @@ import static org.mockito.Mockito.*;
 class OwnerServiceImplTest {
 
     private Owner owner;
-    private final String lastName = "Smith";
-    private final Long ownerId = 123L;
+    private final static String lastName = "Smith";
+    private final static Long ownerId = 123L;
 
     @Mock
     private OwnerRepository repository;
