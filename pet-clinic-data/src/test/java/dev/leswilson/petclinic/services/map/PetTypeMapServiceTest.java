@@ -16,8 +16,10 @@ class PetTypeMapServiceTest {
 
     private PetTypeMapService service;
 
-    private PetType petType1, petType2, petType3;
-    private Set<PetType> petTypes;
+    private PetType petType1;
+    private PetType petType2;
+    private PetType petType3;
+    private Set<PetType> petTypeSet;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +43,7 @@ class PetTypeMapServiceTest {
             petType3.setName("Parrot");
             petType3 = service.save(petType3);
 
-            petTypes = service.findAll();
+            petTypeSet = service.findAll();
         }
 
         @DisplayName("When we search for PetTypes")
@@ -52,8 +54,8 @@ class PetTypeMapServiceTest {
             @DisplayName("Then we can find all PetTypes")
             void findAll() {
                 // findAll has been called in setUp, so we are just confirming it works here
-                assertThat(petTypes, hasSize(3));
-                assertThat(petTypes, hasItems(petType1, petType3, petType2));
+                assertThat(petTypeSet, hasSize(3));
+                assertThat(petTypeSet, hasItems(petType1, petType3, petType2));
             }
 
             @Test
@@ -81,7 +83,7 @@ class PetTypeMapServiceTest {
             @Test
             @DisplayName("Then the PetType is added to the list")
             void save() {
-                assertThat(petTypes, hasSize(3));
+                assertThat(petTypeSet, hasSize(3));
                 PetType petType = new PetType();
                 petType.setName("Rocky12");
                 service.save(petType);
@@ -98,43 +100,43 @@ class PetTypeMapServiceTest {
             @Test
             @DisplayName("Then we can delete PetType using an existing PetType object")
             void deleteAnExistingPetTypeObject() {
-                assertThat(petTypes, hasSize(3));
+                assertThat(petTypeSet, hasSize(3));
                 service.delete(petType2);
-                petTypes = service.findAll();
-                assertThat(petTypes, hasSize(2));
-                assertThat(petTypes.contains(petType2), is(false));
+                petTypeSet = service.findAll();
+                assertThat(petTypeSet, hasSize(2));
+                assertThat(petTypeSet.contains(petType2), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a PetType using a PetType that doesn't exist")
             void deleteANonExistentPetTypeObjectHasNoImpact() {
-                assertThat(petTypes, hasSize(3));
+                assertThat(petTypeSet, hasSize(3));
                 PetType petType = new PetType();
                 petType.setId(100L);
                 petType.setName("test");
                 service.delete(petType);
-                petTypes = service.findAll();
-                assertThat(petTypes, hasSize(3));
-                assertThat(petTypes.contains(petType), is(false));
+                petTypeSet = service.findAll();
+                assertThat(petTypeSet, hasSize(3));
+                assertThat(petTypeSet.contains(petType), is(false));
             }
 
             @Test
             @DisplayName("Then we can delete a PetType using an existing Id")
             void deleteByExistingId() {
-                assertThat(petTypes, hasSize(3));
+                assertThat(petTypeSet, hasSize(3));
                 service.deleteById(petType3.getId());
-                petTypes = service.findAll();
-                assertThat(petTypes, hasSize(2));
-                assertThat(petTypes.contains(petType3), is(false));
+                petTypeSet = service.findAll();
+                assertThat(petTypeSet, hasSize(2));
+                assertThat(petTypeSet.contains(petType3), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a PetType using an Id that doesn't exist")
             void deleteByNonExistentId() {
-                assertThat(petTypes, hasSize(3));
+                assertThat(petTypeSet, hasSize(3));
                 service.deleteById(101L);
-                petTypes = service.findAll();
-                assertThat(petTypes, hasSize(3));
+                petTypeSet = service.findAll();
+                assertThat(petTypeSet, hasSize(3));
             }
         }
     }

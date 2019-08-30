@@ -18,9 +18,11 @@ class PetMapServiceTest {
 
     private PetMapService service;
 
-    private Pet pet1, pet2, pet3;
+    private Pet pet1;
+    private Pet pet2;
+    private Pet pet3;
     private Owner owner;
-    private Set<Pet> pets;
+    private Set<Pet> petSet;
 
     @BeforeEach
     void setUp() {
@@ -48,7 +50,7 @@ class PetMapServiceTest {
             pet3.setName("Rocky3");
             pet3 = service.save(pet3);
 
-            pets = service.findAll();
+            petSet = service.findAll();
         }
 
         @DisplayName("When we search for Pets")
@@ -58,8 +60,8 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can find all Pets")
             void findAll() {
-                assertThat(pets, hasSize(3));
-                assertThat(pets, hasItems(pet1, pet3, pet2));
+                assertThat(petSet, hasSize(3));
+                assertThat(petSet, hasItems(pet1, pet3, pet2));
             }
 
             @Test
@@ -119,43 +121,43 @@ class PetMapServiceTest {
             @Test
             @DisplayName("Then we can delete Pet using an existing Pet object")
             void deleteAnExistingPetObject() {
-                assertThat(pets, hasSize(3));
+                assertThat(petSet, hasSize(3));
                 service.delete(pet2);
-                pets = service.findAll();
-                assertThat(pets, hasSize(2));
-                assertThat(pets.contains(pet2), is(false));
+                petSet = service.findAll();
+                assertThat(petSet, hasSize(2));
+                assertThat(petSet.contains(pet2), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Pet using a Pet that doesn't exist")
             void deleteANonExistentPetObjectHasNoImpact() {
-                assertThat(pets, hasSize(3));
+                assertThat(petSet, hasSize(3));
                 Pet pet = new Pet();
                 pet.setId(100L);
                 pet.setName("test");
                 service.delete(pet);
-                pets = service.findAll();
-                assertThat(pets, hasSize(3));
-                assertThat(pets.contains(pet), is(false));
+                petSet = service.findAll();
+                assertThat(petSet, hasSize(3));
+                assertThat(petSet.contains(pet), is(false));
             }
 
             @Test
             @DisplayName("Then we can delete a Pet using an existing Id")
             void deleteByExistingId() {
-                assertThat(pets, hasSize(3));
+                assertThat(petSet, hasSize(3));
                 service.deleteById(pet3.getId());
-                pets = service.findAll();
-                assertThat(pets, hasSize(2));
-                assertThat(pets.contains(pet3), is(false));
+                petSet = service.findAll();
+                assertThat(petSet, hasSize(2));
+                assertThat(petSet.contains(pet3), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Pet using an Id that doesn't exist")
             void deleteByNonExistentId() {
-                assertThat(pets, hasSize(3));
+                assertThat(petSet, hasSize(3));
                 service.deleteById(101L);
-                pets = service.findAll();
-                assertThat(pets, hasSize(3));
+                petSet = service.findAll();
+                assertThat(petSet, hasSize(3));
             }
         }
     }

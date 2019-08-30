@@ -17,16 +17,18 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 class OwnerMapServiceTest {
 
+    private static final String FIRST_NAME = "Rocky12";
+    private static final String ROXY = "Roxy";
     private OwnerMapService service;
 
-    private PetService petService;
-
-    private Owner owner1, owner2, owner3;
-    private Set<Owner> owners;
+    private Owner owner1;
+    private Owner owner2;
+    private Owner owner3;
+    private Set<Owner> ownerSet;
 
     @BeforeEach
     void setUp() {
-        petService = new PetMapService();
+        PetService petService = new PetMapService();
         service = new OwnerMapService(petService);
     }
 
@@ -50,7 +52,7 @@ class OwnerMapServiceTest {
             owner3.setLastName("Halboa25");
             owner3 = service.save(owner3);
 
-            owners = service.findAll();
+            ownerSet = service.findAll();
         }
 
         @DisplayName("When we search for Owners")
@@ -60,8 +62,8 @@ class OwnerMapServiceTest {
             @Test
             @DisplayName("Then we can find all Owners")
             void findAll() {
-                assertThat(owners, hasSize(3));
-                assertThat(owners, hasItems(owner1, owner3, owner2));
+                assertThat(ownerSet, hasSize(3));
+                assertThat(ownerSet, hasItems(owner1, owner3, owner2));
             }
 
             @Test
@@ -108,7 +110,7 @@ class OwnerMapServiceTest {
             @Test
             @DisplayName("Then we cannot find Owners by partial last name that doesn't exist")
             void findByOwnerLastNameReturnsNoRowsWhenNonExistentPartialLastNamePassedIn() {
-                List<Owner> owners = service.findAllByLastNameLike("Smith");
+                List<Owner> owners = service.findAllByLastNameLike("Smi");
                 assertThat(owners, hasSize(0));
             }
         }
@@ -119,9 +121,9 @@ class OwnerMapServiceTest {
             @Test
             @DisplayName("Then the valid Owner is added to the list")
             void save() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 Owner owner = new Owner();
-                owner.setFirstName("Rocky12");
+                owner.setFirstName(FIRST_NAME);
                 service.save(owner);
                 Set<Owner> owners = service.findAll();
                 assertThat(owners, hasSize(4));
@@ -130,7 +132,7 @@ class OwnerMapServiceTest {
             @Test
             @DisplayName("Then the null Owner is not added to the list")
             void saveNull() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 Owner owner = null;
                 Owner save = service.save(owner);
                 assertThat(save, is(nullValue()));
@@ -147,43 +149,43 @@ class OwnerMapServiceTest {
             @Test
             @DisplayName("Then we can delete Owner using an existing Owner object")
             void deleteAnExistingOwnerObject() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 service.delete(owner2);
-                owners = service.findAll();
-                assertThat(owners, hasSize(2));
-                assertThat(owners.contains(owner2), is(false));
+                ownerSet = service.findAll();
+                assertThat(ownerSet, hasSize(2));
+                assertThat(ownerSet.contains(owner2), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Owner using a Owner that doesn't exist")
             void deleteANonExistentOwnerObjectHasNoImpact() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 Owner owner = new Owner();
                 owner.setId(100L);
                 owner.setFirstName("test");
                 service.delete(owner);
-                owners = service.findAll();
-                assertThat(owners, hasSize(3));
-                assertThat(owners.contains(owner), is(false));
+                ownerSet = service.findAll();
+                assertThat(ownerSet, hasSize(3));
+                assertThat(ownerSet.contains(owner), is(false));
             }
 
             @Test
             @DisplayName("Then we can delete a Owner using an existing Id")
             void deleteByExistingId() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 service.deleteById(owner3.getId());
-                owners = service.findAll();
-                assertThat(owners, hasSize(2));
-                assertThat(owners.contains(owner3), is(false));
+                ownerSet = service.findAll();
+                assertThat(ownerSet, hasSize(2));
+                assertThat(ownerSet.contains(owner3), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Owner using an Id that doesn't exist")
             void deleteByNonExistentId() {
-                assertThat(owners, hasSize(3));
+                assertThat(ownerSet, hasSize(3));
                 service.deleteById(101L);
-                owners = service.findAll();
-                assertThat(owners, hasSize(3));
+                ownerSet = service.findAll();
+                assertThat(ownerSet, hasSize(3));
             }
         }
 
@@ -194,9 +196,9 @@ class OwnerMapServiceTest {
             @DisplayName("Then a new pet id is created when the Owner is saved")
             void addNewPetToOwner() {
                 Owner owner = new Owner();
-                owner.setFirstName("Rocky12");
+                owner.setFirstName(FIRST_NAME);
                 Pet pet = new Pet();
-                pet.setName("Roxy");
+                pet.setName(ROXY);
                 owner.getPets().add(pet);
                 assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(nullValue()));
                 service.save(owner);
@@ -211,10 +213,10 @@ class OwnerMapServiceTest {
             @DisplayName("Then the pet id is unchanged when the Owner is saved")
             void addNewPetToOwner() {
                 Owner owner = new Owner();
-                owner.setFirstName("Rocky12");
+                owner.setFirstName(FIRST_NAME);
                 Pet pet = new Pet();
                 pet.setId(123L);
-                pet.setName("Roxy");
+                pet.setName(ROXY);
                 owner.getPets().add(pet);
                 assertThat(((Pet)owner.getPets().toArray()[0]).getId(), is(123L));
                 service.save(owner);
@@ -229,10 +231,10 @@ class OwnerMapServiceTest {
             @DisplayName("Then the new pet gets an id and the existing pet id is unchanged when the Owner is saved")
             void addNewAndExistingPetsToOwner() {
                 Owner owner = new Owner();
-                owner.setFirstName("Rocky12");
+                owner.setFirstName(FIRST_NAME);
                 Pet pet = new Pet();
                 pet.setId(123L);
-                pet.setName("Roxy");
+                pet.setName(ROXY);
                 owner.getPets().add(pet);
 
                 Pet pet2 = new Pet();
@@ -251,9 +253,8 @@ class OwnerMapServiceTest {
                 Set<Pet> pets = owner.getPets();
                 assertThat(pets.stream().filter(Pet::isNew).count(), is(0L));
                 assertThat(pets.stream().filter(p -> !p.isNew()).count(), is(2L));
-                assertThat(pets.stream().filter(p -> "Roxy".equals(p.getName()) && p.getId().equals(123L)).count(), is(1L));
+                assertThat(pets.stream().filter(p -> ROXY.equals(p.getName()) && p.getId().equals(123L)).count(), is(1L));
             }
         }
-
     }
 }

@@ -16,7 +16,9 @@ class SpecialityMapServiceTest {
 
     private SpecialityMapService service;
 
-    private Speciality speciality1, speciality2, speciality3;
+    private Speciality speciality1;
+    private Speciality speciality2;
+    private Speciality speciality3;
     private Set<Speciality> specialities;
 
     @BeforeEach

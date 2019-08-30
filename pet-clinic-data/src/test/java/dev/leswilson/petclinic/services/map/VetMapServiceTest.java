@@ -18,8 +18,11 @@ class VetMapServiceTest {
 
     private VetMapService service;
 
-    private Vet vet1, vet2, vet3;
-    private Speciality speciality1, speciality2;
+    private Vet vet1;
+    private Vet vet2;
+    private Vet vet3;
+    private Speciality speciality1;
+    private Speciality speciality2;
 
     @BeforeEach
     void setUp() {

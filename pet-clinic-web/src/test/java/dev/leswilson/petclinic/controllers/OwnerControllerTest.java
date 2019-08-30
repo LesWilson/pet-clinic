@@ -27,17 +27,15 @@ class OwnerControllerTest {
     @InjectMocks
     private OwnerController controller;
 
-    private Owner owner;
-
     private Set<Owner> owners;
 
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
         owners = new HashSet<>();
 
-        owner = new Owner();
+        Owner owner = new Owner();
         owner.setId(1L);
         owner.setFirstName("Jack");
         owner.setLastName("London");

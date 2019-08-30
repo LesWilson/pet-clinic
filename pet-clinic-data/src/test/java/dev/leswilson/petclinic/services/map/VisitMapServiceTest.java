@@ -19,10 +19,15 @@ class VisitMapServiceTest {
 
     private VisitMapService service;
 
-    private Visit visit1, visit2, visit3;
-    private Pet pet1, pet2, pet3;
-    private Owner owner1, owner2;
-    private Set<Visit> visits;
+    private Visit visit1;
+    private Visit visit2;
+    private Visit visit3;
+    private Pet pet1;
+    private Pet pet2;
+    private Pet pet3;
+    private Owner owner1;
+    private Owner owner2;
+    private Set<Visit> visitSet;
 
     @BeforeEach
     void setUp() {
@@ -79,7 +84,7 @@ class VisitMapServiceTest {
             visit3.setPet(pet2);
             visit3 = service.save(visit3);
 
-            visits = service.findAll();
+            visitSet = service.findAll();
         }
 
         @DisplayName("When we search for Visits")
@@ -89,8 +94,8 @@ class VisitMapServiceTest {
             @Test
             @DisplayName("Then we can find all Visits")
             void findAll() {
-                assertThat(visits, hasSize(3));
-                assertThat(visits, hasItems(visit1, visit3, visit2));
+                assertThat(visitSet, hasSize(3));
+                assertThat(visitSet, hasItems(visit1, visit3, visit2));
             }
 
             @Test
@@ -152,9 +157,9 @@ class VisitMapServiceTest {
                 Visit visit = new Visit();
                 visit.setDescription("Rocky12");
                 visit = service.save(visit);
-                visits = service.findAll();
-                assertThat(visits, hasSize(4));
-                assertThat(visits.contains(visit), is(true));
+                visitSet = service.findAll();
+                assertThat(visitSet, hasSize(4));
+                assertThat(visitSet.contains(visit), is(true));
             }
 
         }
@@ -165,43 +170,43 @@ class VisitMapServiceTest {
             @Test
             @DisplayName("Then we can delete Visit using an existing Visit object")
             void deleteAnExistingVisitObject() {
-                assertThat(visits, hasSize(3));
+                assertThat(visitSet, hasSize(3));
                 service.delete(visit2);
-                visits = service.findAll();
-                assertThat(visits, hasSize(2));
-                assertThat(visits.contains(visit2), is(false));
+                visitSet = service.findAll();
+                assertThat(visitSet, hasSize(2));
+                assertThat(visitSet.contains(visit2), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Visit using a Visit that doesn't exist")
             void deleteANonExistentVisitObjectHasNoImpact() {
-                assertThat(visits, hasSize(3));
+                assertThat(visitSet, hasSize(3));
                 Visit visit = new Visit();
                 visit.setId(100L);
                 visit.setDescription("test");
                 service.delete(visit);
-                visits = service.findAll();
-                assertThat(visits, hasSize(3));
-                assertThat(visits.contains(visit), is(false));
+                visitSet = service.findAll();
+                assertThat(visitSet, hasSize(3));
+                assertThat(visitSet.contains(visit), is(false));
             }
 
             @Test
             @DisplayName("Then we can delete a Visit using an existing Id")
             void deleteByExistingId() {
-                assertThat(visits, hasSize(3));
+                assertThat(visitSet, hasSize(3));
                 service.deleteById(visit3.getId());
-                visits = service.findAll();
-                assertThat(visits, hasSize(2));
-                assertThat(visits.contains(visit3), is(false));
+                visitSet = service.findAll();
+                assertThat(visitSet, hasSize(2));
+                assertThat(visitSet.contains(visit3), is(false));
             }
 
             @Test
             @DisplayName("Then we cannot delete a Visit using an Id that doesn't exist")
             void deleteByNonExistentId() {
-                assertThat(visits, hasSize(3));
+                assertThat(visitSet, hasSize(3));
                 service.deleteById(101L);
-                visits = service.findAll();
-                assertThat(visits, hasSize(3));
+                visitSet = service.findAll();
+                assertThat(visitSet, hasSize(3));
             }
         }
     }
