@@ -22,10 +22,11 @@ import java.util.List;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="pet",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class Pet extends BaseEntity {
+
+    /* Sonar Ignore Start */
 
     private LocalDate birthDate;
 
@@ -41,4 +42,6 @@ public class Pet extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private List<Visit> visits = new ArrayList<>();
+
+    /* Sonar Ignore End */
 }
