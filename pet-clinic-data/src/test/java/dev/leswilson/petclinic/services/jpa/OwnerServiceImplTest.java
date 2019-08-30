@@ -21,8 +21,8 @@ import static org.mockito.Mockito.*;
 class OwnerServiceImplTest {
 
     private Owner owner;
-    private final static String lastName = "Smith";
-    private final static Long ownerId = 123L;
+    private static final String LAST_NAME = "Smith";
+    private static final Long OWNER_ID = 123L;
 
     @Mock
     private OwnerRepository repository;
@@ -30,11 +30,11 @@ class OwnerServiceImplTest {
     private OwnerServiceImpl service;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         owner = new Owner();
-        owner.setId(ownerId);
+        owner.setId(OWNER_ID);
         owner.setFirstName("Paul");
-        owner.setLastName(lastName);
+        owner.setLastName(LAST_NAME);
     }
     
     @Test
@@ -70,45 +70,45 @@ class OwnerServiceImplTest {
 
     @Test
     void deleteById() {
-        service.deleteById(ownerId);
+        service.deleteById(OWNER_ID);
 
-        verify(repository).deleteById(ownerId);
+        verify(repository).deleteById(OWNER_ID);
     }
 
     @Test
     void findById() {
-        when(repository.findById(ownerId)).thenReturn(Optional.of(owner));
+        when(repository.findById(OWNER_ID)).thenReturn(Optional.of(owner));
 
-        Owner smith = service.findById(ownerId);
+        Owner smith = service.findById(OWNER_ID);
         assertThat(smith, is(notNullValue()));
-        assertThat(smith.getId(), is(ownerId));
+        assertThat(smith.getId(), is(OWNER_ID));
         // Next two lines equivalent - if no times, default is one
-        verify(repository).findById(ownerId);
-        verify(repository, times(1)).findById(ownerId);
+        verify(repository).findById(OWNER_ID);
+        verify(repository, times(1)).findById(OWNER_ID);
     }
 
     @Test
     void findByLastName() {
-        when(repository.findByLastName(lastName)).thenReturn(owner);
+        when(repository.findByLastName(LAST_NAME)).thenReturn(owner);
 
-        Owner smith = service.findByLastName(lastName);
+        Owner smith = service.findByLastName(LAST_NAME);
         assertThat(smith, is(notNullValue()));
-        assertThat(smith.getId(), is(ownerId));
+        assertThat(smith.getId(), is(OWNER_ID));
         // Next two lines equivalent - if no times, default is one
-        verify(repository).findByLastName(lastName);
-        verify(repository, times(1)).findByLastName(lastName);
+        verify(repository).findByLastName(LAST_NAME);
+        verify(repository, times(1)).findByLastName(LAST_NAME);
     }
 
     @Test
     void findAllByLastNameLike() {
-        when(repository.findAllByLastNameLike(lastName)).thenReturn(Arrays.asList(owner));
+        when(repository.findAllByLastNameLike(LAST_NAME)).thenReturn(Collections.singletonList(owner));
 
-        List<Owner> list = service.findAllByLastNameLike(lastName);
+        List<Owner> list = service.findAllByLastNameLike(LAST_NAME);
         assertThat(list, is(notNullValue()));
         assertThat(list, hasSize(1));
-        assertThat(list.get(0).getId(), is(ownerId));
+        assertThat(list.get(0).getId(), is(OWNER_ID));
         // Next two lines equivalent - if no times, default is one
-        verify(repository).findAllByLastNameLike(lastName);
-        verify(repository, times(1)).findAllByLastNameLike(lastName);
+        verify(repository).findAllByLastNameLike(LAST_NAME);
+        verify(repository, times(1)).findAllByLastNameLike(LAST_NAME);
     }
 }

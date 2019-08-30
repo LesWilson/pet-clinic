@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class SpecialityServiceImplTest {
 
     private Speciality speciality;
-    private final static Long specialityId = 123L;
+    private static final Long SPECIALITY_ID = 123L;
 
     @Mock
     private SpecialityRepository repository;
@@ -33,7 +33,7 @@ class SpecialityServiceImplTest {
     @BeforeEach
     void setup() {
         speciality = new Speciality();
-        speciality.setId(specialityId);
+        speciality.setId(SPECIALITY_ID);
         speciality.setDescription("Dentistry");
     }
     
@@ -70,21 +70,21 @@ class SpecialityServiceImplTest {
 
     @Test
     void deleteById() {
-        service.deleteById(specialityId);
+        service.deleteById(SPECIALITY_ID);
 
-        verify(repository).deleteById(specialityId);
+        verify(repository).deleteById(SPECIALITY_ID);
     }
 
     @Test
     void findById() {
-        when(repository.findById(specialityId)).thenReturn(Optional.of(speciality));
+        when(repository.findById(SPECIALITY_ID)).thenReturn(Optional.of(speciality));
 
-        Speciality smith = service.findById(specialityId);
+        Speciality smith = service.findById(SPECIALITY_ID);
         assertThat(smith, is(notNullValue()));
-        assertThat(smith.getId(), is(specialityId));
+        assertThat(smith.getId(), is(SPECIALITY_ID));
         // Next two lines equivalent - if no times, default is one
-        verify(repository).findById(specialityId);
-        verify(repository, times(1)).findById(specialityId);
+        verify(repository).findById(SPECIALITY_ID);
+        verify(repository, times(1)).findById(SPECIALITY_ID);
     }
 
 }
