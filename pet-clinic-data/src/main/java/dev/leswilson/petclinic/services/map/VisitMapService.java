@@ -8,38 +8,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
 @Profile("map")
 @Service
 public class VisitMapService extends AbstractMapService<Visit, Long> implements VisitService {
-
-    @Override
-    public Set<Visit> findAll() {
-        return super.findAll();
-    }
-
-    @Override
-    public void delete(Visit t) {
-        super.delete(t);
-    }
-
-    @Override
-    public Visit save(Visit visit) {
-        return super.save(visit);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        super.deleteById(id);
-    }
-
-    @Override
-    public Visit findById(Long id) {
-        return super.findById(id);
-    }
 
     @Override
     public List<Visit> findByPet(Pet pet) {
