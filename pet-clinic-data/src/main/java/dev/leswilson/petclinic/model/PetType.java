@@ -22,9 +22,10 @@ import javax.persistence.TableGenerator;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="pet_type",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class PetType extends BaseEntity {
+    /* Sonar Ignore Start */
     private String name;
+    /* Sonar Ignore End */
 }

@@ -24,16 +24,6 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
     }
 
     @Override
-    public Set<Owner> findAll() {
-        return super.findAll();
-    }
-
-    @Override
-    public void delete(Owner t) {
-        super.delete(t);
-    }
-
-    @Override
     public Owner save(Owner owner) {
         // add logic to iterate through pets and save any that don't exist
         if(owner != null) {
@@ -47,16 +37,6 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
             return super.save(owner);
         }
         return null;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        super.deleteById(id);
-    }
-
-    @Override
-    public Owner findById(Long id) {
-        return super.findById(id);
     }
 
     @Override

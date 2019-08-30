@@ -20,13 +20,14 @@ import java.util.List;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="speciality",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class Speciality extends BaseEntity {
 
+    /* Sonar Ignore Start */
     @ManyToMany(mappedBy = "specialities")
     private List<Vet> vets;
 
     private String description;
+    /* Sonar Ignore End */
 }

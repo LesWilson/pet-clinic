@@ -21,8 +21,7 @@ import java.util.Set;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="owner",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class Owner extends Person {
 
@@ -34,6 +33,7 @@ public class Owner extends Person {
 //        this.pets = pets;
 //    }
 
+    /* Sonar Ignore Start */
     @Embedded
     @AttributeOverrides(value = {
             @AttributeOverride(name = "line1", column = @Column(name = "home_address_line_1")),
@@ -49,4 +49,5 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+    /* Sonar Ignore End */
 }

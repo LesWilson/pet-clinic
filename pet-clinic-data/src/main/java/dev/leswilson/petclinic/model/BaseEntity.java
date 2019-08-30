@@ -19,6 +19,7 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    /* Sonar Ignore Start */
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator="idGen")
     private Long id;
@@ -38,6 +39,7 @@ public class BaseEntity implements Serializable {
     @Column(nullable = false)
     @LastModifiedDate   // can also use @UpdateTimestamp
     private Date updatedAt;
+    /* Sonar Ignore End */
 
     public boolean isNew() {
         return id == null;

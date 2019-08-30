@@ -9,15 +9,15 @@ public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
 
     private Map<Long, T> map = new HashMap<>();
 
-    Set<T> findAll() {
+    public Set<T> findAll() {
         return new HashSet<>(map.values());
     }
 
-    T findById(I id) {
+    public T findById(I id) {
         return map.get(id);
     }
 
-    T save(T t) {
+    public T save(T t) {
         if(t != null) {
             if (t.isNew()) {
                 t.setId(this.getNextId());
@@ -29,11 +29,11 @@ public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
         return t;
     }
 
-    void delete(T t) {
+    public void delete(T t) {
         map.entrySet().removeIf(entry -> entry.getValue().equals(t));
     }
 
-    void deleteById(I id) {
+    public void deleteById(I id) {
         map.remove(id);
     }
 

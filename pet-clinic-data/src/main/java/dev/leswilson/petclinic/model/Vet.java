@@ -21,16 +21,16 @@ import java.util.List;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="vet",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class Vet extends Person {
 
+    /* Sonar Ignore Start */
     @ManyToMany
     @JoinTable(name = "vet_speciality",
             joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id")
     )
     private List<Speciality> specialities = new ArrayList<>();
-
+    /* Sonar Ignore End */
 }

@@ -27,7 +27,6 @@ import java.util.List;
 public class Pet extends BaseEntity {
 
     /* Sonar Ignore Start */
-
     private LocalDate birthDate;
 
     @ManyToOne
@@ -42,6 +41,5 @@ public class Pet extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private List<Visit> visits = new ArrayList<>();
-
     /* Sonar Ignore End */
 }

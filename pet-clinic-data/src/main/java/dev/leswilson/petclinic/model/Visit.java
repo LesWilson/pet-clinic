@@ -20,11 +20,11 @@ import java.time.LocalDateTime;
         pkColumnName = "table_name",
         valueColumnName = "next_id",
         pkColumnValue="visit",
-        allocationSize=5,
-        initialValue = 0
+        allocationSize=5
 )
 public class Visit extends BaseEntity {
 
+    /* Sonar Ignore Start */
     private LocalDateTime date = LocalDateTime.now();
 
     @ManyToOne
@@ -32,5 +32,6 @@ public class Visit extends BaseEntity {
     private Pet pet;
 
     private String description;
+    /* Sonar Ignore End */
 
 }
