@@ -1,10 +1,11 @@
 package dev.leswilson.petclinic.services.map;
 
+import dev.leswilson.petclinic.exceptions.DataException;
 import dev.leswilson.petclinic.model.BaseEntity;
 
 import java.util.*;
 
-public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
+public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
 
     private Map<Long, T> map = new HashMap<>();
 
@@ -12,7 +13,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         return new HashSet<>(map.values());
     }
 
-    T findById(ID id) {
+    T findById(I id) {
         return map.get(id);
     }
 
@@ -23,7 +24,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
             }
             map.put(t.getId(), t);
         } else {
-            throw new RuntimeException("Object passed in cannot be null");
+            throw new DataException("Object passed in cannot be null");
         }
         return t;
     }
@@ -32,7 +33,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         map.entrySet().removeIf(entry -> entry.getValue().equals(t));
     }
 
-    void deleteById(ID id) {
+    void deleteById(I id) {
         map.remove(id);
     }
 

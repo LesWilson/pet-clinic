@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @Embeddable
-public class Address {
+public class Address implements Serializable {
+    private static final long serialVersionUID = 123L;
 
     private String line1;
     private String line2;

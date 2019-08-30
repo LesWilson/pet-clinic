@@ -1,5 +1,6 @@
 package dev.leswilson.petclinic.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
@@ -9,26 +10,27 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
+@Slf4j
 public class NamingStrategy implements PhysicalNamingStrategy {
     private static final Map<String,String> ABBREVIATIONS = buildAbbreviationMap();
 
     @Override
     public Identifier toPhysicalCatalogName(Identifier name, JdbcEnvironment jdbcEnvironment) {
         // Acme naming standards do not apply to catalog names
-        System.out.println("toPhysicalCatalogName:"+name);
+        log.info("toPhysicalCatalogName:"+name);
         return name;
     }
 
     @Override
     public Identifier toPhysicalSchemaName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-        System.out.println("toPhysicalSchemaName:"+name);
+        log.info("toPhysicalSchemaName:"+name);
         // Acme naming standards do not apply to schema names
         return null;
     }
 
     @Override
     public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-        System.out.println("toPhysicalTableName:"+name);
+        log.info("toPhysicalTableName:"+name);
         final List<String> parts = splitAndReplace( name.getText() );
         return jdbcEnvironment.getIdentifierHelper().toIdentifier(
                 join( parts ),
@@ -38,7 +40,7 @@ public class NamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-        System.out.println("toPhysicalSequenceName:"+name);
+        log.info("toPhysicalSequenceName:"+name);
         final LinkedList<String> parts = splitAndReplace( name.getText() );
         // Acme Corp says all sequences should end with _seq
         if ( !"seq".equalsIgnoreCase( parts.getLast() ) ) {
@@ -52,7 +54,7 @@ public class NamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-        System.out.println("toPhysicalColumnName:"+name);
+        log.info("toPhysicalColumnName:"+name);
         final List<String> parts = splitAndReplace( name.getText() );
         return jdbcEnvironment.getIdentifierHelper().toIdentifier(
                 join( parts ),

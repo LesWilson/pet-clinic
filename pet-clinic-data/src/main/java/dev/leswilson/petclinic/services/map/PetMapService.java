@@ -42,11 +42,6 @@ public class PetMapService extends AbstractMapService<Pet, Long> implements PetS
 
     @Override
     public List<Pet> findByOwner(Owner owner) {
-//        return map.entrySet()
-//                .stream()
-//                .filter(entry -> owner.equals(entry.getValue().getOwner()))
-//                .map(e -> e.getValue())
-//                .collect(toSet());
 
         return this.findAll()
                 .stream()
