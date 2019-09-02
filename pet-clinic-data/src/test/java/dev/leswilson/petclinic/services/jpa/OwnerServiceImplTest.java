@@ -94,7 +94,7 @@ class OwnerServiceImplTest {
         Owner smith = service.findByLastName(LAST_NAME);
         assertThat(smith, is(notNullValue()));
         assertThat(smith.getId(), is(OWNER_ID));
-        // Next two lines equivalent - if no times, default is one
+        // ** INFO ** Next two lines equivalent - if no times, default is one
         verify(repository).findByLastName(LAST_NAME);
         verify(repository, times(1)).findByLastName(LAST_NAME);
     }

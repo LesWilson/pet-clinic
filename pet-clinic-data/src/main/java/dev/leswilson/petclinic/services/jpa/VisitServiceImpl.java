@@ -24,9 +24,9 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Set<Visit> findAll() {
-        Set<Visit> specialities = new HashSet<>();
-        visitRepository.findAll().forEach(specialities::add);
-        return specialities;
+        Set<Visit> visits = new HashSet<>();
+        visitRepository.findAll().forEach(visits::add);
+        return visits;
     }
 
     @Override
