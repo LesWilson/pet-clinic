@@ -56,4 +56,16 @@ public class VetServiceImpl implements VetService {
     public List<Vet> findBySpeciality(Speciality speciality) {
         return vetRepository.findAllBySpecialities(speciality);
     }
+
+    @Override
+    public Vet findByLastName(String lastName) {
+        return vetRepository.findByLastName(lastName);
+    }
+
+    @Override
+    public List<Vet> findAllByLastNameLike(String lastName) {
+        return vetRepository.findAllByLastNameLike(lastName);
+    }
+
+
 }

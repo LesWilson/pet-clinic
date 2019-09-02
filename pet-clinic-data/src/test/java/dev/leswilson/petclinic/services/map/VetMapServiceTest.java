@@ -113,6 +113,36 @@ class VetMapServiceTest {
                 List<Vet> vets = service.findBySpeciality(speciality);
                 assertThat(vets, hasSize(0));
             }
+            @Test
+            @DisplayName("Then we can find a Vet by last name")
+            void findByVetReturnsRowsWhenExistingLastNamePassedIn() {
+                Vet vet = service.findByLastName("Balboa2");
+                assertThat(vet, is(notNullValue()));
+                assertThat(vet, is(vet2));
+            }
+
+            @Test
+            @DisplayName("Then we cannot find a Vet by last name that doesn't exist")
+            void findByVetReturnsNoRowsWhenNonExistentLastNamePassedIn() {
+                Vet vet = service.findByLastName("Smith");
+                assertThat(vet, is(nullValue()));
+            }
+
+            @Test
+            @DisplayName("Then we can find Vets by partial last name")
+            void findByVetsLastNameLikeReturnsRowsWhenPartialExistingLastNamePassedIn() {
+                List<Vet> vets = service.findAllByLastNameLike("boa2");
+                assertThat(vets, is(notNullValue()));
+                assertThat(vets, hasSize(1));
+                assertThat(vets, hasItems(vet2));
+            }
+
+            @Test
+            @DisplayName("Then we cannot find Vets by partial last name that doesn't exist")
+            void findByVetsLastNameReturnsNoRowsWhenNonExistentPartialLastNamePassedIn() {
+                List<Vet> vets = service.findAllByLastNameLike("Smi");
+                assertThat(vets, hasSize(0));
+            }
 
         }
 

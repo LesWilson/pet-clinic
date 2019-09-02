@@ -8,4 +8,7 @@ import java.util.List;
 public interface VetService extends CrudService<Vet, Long> {
 
     List<Vet> findBySpeciality(Speciality speciality);
+    Vet findByLastName(String lastName);
+    List<Vet> findAllByLastNameLike(String lastName);
+
 }
