@@ -85,7 +85,7 @@ class VisitServiceImplTest {
         assertThat(visitFound, is(notNullValue()));
         assertThat(visitFound, is(visitFound));
         assertThat(visitFound.getId(), is(VISIT_ID));
-        // Default is called once
+        // Check findById is called once
         verify(repository).findById(VISIT_ID);
     }
 
