@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -35,6 +36,7 @@ class SpecialityServiceImplTest {
         speciality = new Speciality();
         speciality.setId(SPECIALITY_ID);
         speciality.setDescription("Dentistry");
+        speciality.setVets(new ArrayList<>());
     }
     
     @Test
@@ -58,6 +60,8 @@ class SpecialityServiceImplTest {
         when(repository.save(any())).thenReturn(speciality);
         Speciality saved = service.save(new Speciality());
         assertThat(saved, is(notNullValue()));
+        assertThat(saved, is(speciality));
+        assertThat(saved.getVets(), is(hasSize(0)));
         verify(repository).save(any());
     }
 

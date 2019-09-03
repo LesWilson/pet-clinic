@@ -37,6 +37,7 @@ class VetServiceImplTest {
         vet.setId(VET_ID);
         vet.setFirstName("Archie");
         vet.setLastName(LAST_NAME);
+        vet.setSpecialities(new ArrayList<>());
         vetSet = new HashSet<>();
         vetSet.add(vet);
     }

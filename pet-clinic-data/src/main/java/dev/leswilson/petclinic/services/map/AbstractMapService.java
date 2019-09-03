@@ -23,10 +23,9 @@ public abstract class AbstractMapService<T extends BaseEntity, I extends Long> {
                 t.setId(this.getNextId());
             }
             map.put(t.getId(), t);
-        } else {
-            throw new DataException("Object passed in cannot be null");
+            return t;
         }
-        return t;
+        throw new DataException("Object passed in cannot be null");
     }
 
     public void delete(T t) {

@@ -35,6 +35,7 @@ class OwnerServiceImplTest {
         owner.setId(OWNER_ID);
         owner.setFirstName("Paul");
         owner.setLastName(LAST_NAME);
+        owner.setPets(new HashSet<>());
     }
     
     @Test
