@@ -1,8 +1,11 @@
 package dev.leswilson.petclinic.controllers;
 
-import dev.leswilson.petclinic.model.Owner;
-import dev.leswilson.petclinic.services.OwnerService;
-import org.junit.jupiter.api.*;
+import dev.leswilson.petclinic.model.Vet;
+import dev.leswilson.petclinic.services.VetService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,55 +22,48 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
-class OwnerControllerTest {
+class VetControllerTest {
 
     @Mock
-    private OwnerService service;
+    private VetService service;
     @InjectMocks
-    private OwnerController controller;
+    private VetController controller;
 
-    private Set<Owner> owners;
+    private Set<Vet> vets;
 
     private MockMvc mvc;
 
-    private static String[] urisToTest = {"/owners", "/owners/", "/owners/index", "/owners/index.html"};
+    private static String[] urisToTest = {"/vets", "/vets/", "/vets/index", "/vets/index.html"};
 
     @BeforeEach
     void setUp() {
-        owners = new HashSet<>();
+        vets = new HashSet<>();
 
-        Owner owner = new Owner();
-        owner.setId(1L);
-        owner.setFirstName("Jack");
-        owner.setLastName("London");
-        owners.add(owner);
+        Vet vet = new Vet();
+        vet.setId(1L);
+        vet.setFirstName("Jack");
+        vet.setLastName("London");
+        vets.add(vet);
 
-        Owner owner1 = new Owner();
-        owner1.setId(2L);
-        owner1.setFirstName("Jackson");
-        owner1.setLastName("Croydon");
-        owners.add(owner1);
+        Vet vet1 = new Vet();
+        vet1.setId(2L);
+        vet1.setFirstName("Jackson");
+        vet1.setLastName("Croydon");
+        vets.add(vet1);
 
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    @DisplayName("Check all forms of owner index page uri")
+    @DisplayName("Check all forms of vet index page uri")
     @RepeatedTest(value = 4, name = "checking uri: {currentRepetition}/{totalRepetitions}")
     void checkIndexPageUris(RepetitionInfo info) throws Exception {
-        when(service.findAll()).thenReturn(owners);
+        when(service.findAll()).thenReturn(vets);
         String uriToTest = urisToTest[info.getCurrentRepetition()-1];
         mvc.perform(get(uriToTest))
                 .andExpect(status().isOk())
-                .andExpect(view().name("owners/index"))
-                .andExpect(model().attribute("owners", hasSize(2)));
+                .andExpect(view().name("vets/index"))
+                .andExpect(model().attribute("vets", hasSize(2)));
 
         verify(service, times(1)).findAll();
-    }
-
-    @Test
-    void find() throws Exception {
-        mvc.perform(get("/owners/find"))
-                .andExpect(view().name("notimplemented"));
-        verifyZeroInteractions(service);
     }
 }
