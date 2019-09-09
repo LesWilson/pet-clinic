@@ -29,7 +29,6 @@ class NamingStrategyTest {
     void toPhysicalCatalogName() {
         Identifier identifier = Identifier.toIdentifier("Test");
         assertThat(strategy.toPhysicalCatalogName(identifier, null), is(identifier));
-        assertThat(1, is(2));
     }
 
     @Test
