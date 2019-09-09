@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/LesWilson/pet-clinic.svg?style=svg)](https://circleci.com/gh/LesWilson/pet-clinic)
+
 # pet-clinic
 Spring framewwork guru version of pet clinic
 
